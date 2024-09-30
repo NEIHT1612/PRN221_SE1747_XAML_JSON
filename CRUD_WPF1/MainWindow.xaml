@@ -1,0 +1,88 @@
+﻿<Window x:Class="CRUD_WPF1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CRUD_WPF1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dgvDisplay" Grid.Column="0" Grid.Row="0" AutoGenerateColumns="False" CanUserAddRows="False" SelectedCellsChanged="dgvDisplay_SelectedCellsChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="MSS" Width="Auto" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="FullName" Width="Auto" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Gender" Width="Auto" Binding="{Binding Gender}"/>
+                <DataGridTextColumn Header="Department" Width="Auto" Binding="{Binding DepartId}"/>
+                <DataGridTextColumn Header="Dob" Width="Auto" Binding="{Binding Dob, StringFormat=dd-MM-yyyy}"/>
+                <DataGridTextColumn Header="GPA" Width="Auto" Binding="{Binding Gpa}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" >
+            <StackPanel Orientation="Horizontal">
+                <ComboBox Name="cbDepartFilter" Width="150" SelectionChanged="cbDepartFilter_SelectionChanged"/>
+                <Button Name="btnFilter" Content="Filter" Click="btnFilter_Click"/>
+            </StackPanel>
+            <WrapPanel Orientation="Horizontal">
+                <TextBox Name="txtSearch" Width="50" TextChanged="txtSearch_TextChanged"/>
+                <ComboBox Name="cbSearch" Width="150"/>
+                <Button Name="btnSearch" Content="Search" Click="btnSearch_Click"/>
+            </WrapPanel>
+            <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Id" Width="50"/>
+                    <TextBox Name="txtId" Width="200" Text="{Binding ElementName=dgvDisplay, Path=SelectedItem.Id, Mode=OneWay}"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Name" Width="50"/>
+                    <TextBox Name="txtName" Width="200" Text="{Binding ElementName=dgvDisplay, Path=SelectedItem.Name, Mode=OneWay}"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Gender" Width="50"/>
+                    <RadioButton Name="rdbMale" VerticalAlignment="Center" IsChecked="{Binding ElementName=dgvDisplay, Path=SelectedItem.Gender, Mode=OneWay}"/>
+                    <Label Content="Male" Margin="0,0,50,0"/>
+                    <RadioButton Name="rdbFemale" VerticalAlignment="Center" IsChecked="{Binding ElementName=dgvDisplay, Path=SelectedItem.Female, Mode=OneWay}"/>
+                    <Label Content="Female"/>
+                    <CheckBox Name="cbGender" IsChecked="{Binding ElementName=dgvDisplay, Path=SelectedItem.Gender, Mode=OneWay}"/>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Department" Width="Auto"/>
+                    <ComboBox Name="cbDepartment" Width="150" Text="{Binding ElementName=dgvDisplay, Path=SelectedItem.Depart.Name, Mode=OneWay}"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Department" Width="Auto"/>
+                    <StackPanel Name="spnDept" Orientation="Vertical" Tag="SE">
+
+                    </StackPanel>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Dob" Width="50"/>
+                    <DatePicker Name="dtpDob" Width="200" SelectedDate="{Binding ElementName=dgvDisplay, Path=SelectedItem.Dob, Mode=OneWay}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="Dob" Width="50"/>
+                    <Calendar Name="cldDob" Width="200" DisplayDate="{Binding ElementName=dgvDisplay, Path=SelectedItem.Dob, Mode=OneWay}"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Gpa" Width="50"/>
+                    <TextBox Name="txtGpa" Width="200" Text="{Binding ElementName=dgvDisplay, Path=SelectedItem.Gpa, Mode=OneWay}"/>
+                </WrapPanel>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnInsert" Content="Insert" Grid.Column="0" Width="50" Click="btnInsert_Click"/>
+                    <Button Name="btnUpdate" Content="Update" Grid.Column="1" Width="50" Click="btnUpdate_Click"/>
+                    <Button Name="btnDelete" Content="Delete" Grid.Column="2" Width="50" Click="btnDelete_Click"/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
